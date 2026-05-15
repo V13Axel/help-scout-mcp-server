@@ -1,6 +1,29 @@
 // Mock all dependencies BEFORE importing the module under test
 jest.mock('../utils/config.js', () => ({
   validateConfig: jest.fn(),
+  config: {
+    helpscout: {
+      appId: 'test-app-id',
+      appSecret: 'test-app-secret',
+      defaultInboxId: undefined,
+      baseUrl: 'https://api.helpscout.net/v2/',
+    },
+    security: {
+      allowPii: false,
+    },
+    writes: {
+      enabled: false,
+    },
+    connectionPool: {
+      maxSockets: 50,
+      maxFreeSockets: 10,
+      keepAlive: true,
+      keepAliveMsecs: 1000,
+    },
+    attachments: {
+      downloadDir: null,
+    },
+  },
 }));
 
 jest.mock('../utils/logger.js', () => ({
