@@ -43,6 +43,15 @@ export const ConversationSchema = z.object({
   threads: z.number(),
 });
 
+export const AttachmentSchema = z.object({
+  id: z.number(),
+  filename: z.string(),
+  mimeType: z.string(),
+  width: z.number().optional(),
+  height: z.number().optional(),
+  size: z.number().optional(),
+});
+
 export const ThreadSchema = z.object({
   id: z.number(),
   type: z.enum(['customer', 'note', 'lineitem', 'phone', 'message']),
@@ -77,6 +86,9 @@ export const ThreadSchema = z.object({
   }).nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),
+  _embedded: z.object({
+    attachments: z.array(AttachmentSchema).optional().default([]),
+  }).optional(),
 });
 
 // MCP Tool Input Schemas
@@ -331,6 +343,11 @@ export const UserSchema = z.object({
   type: z.string().optional(),
 });
 
+export const DownloadAttachmentInputSchema = z.object({
+  conversationId: z.string().regex(/^\d+$/, 'Conversation ID must be numeric'),
+  attachmentId: z.string().regex(/^\d+$/, 'Attachment ID must be numeric'),
+});
+
 // Response Types
 export const ServerTimeSchema = z.object({
   isoTime: z.string(),
@@ -351,6 +368,7 @@ export type Thread = z.infer<typeof ThreadSchema>;
 export type Customer = z.infer<typeof CustomerSchema>;
 export type CustomerAddress = z.infer<typeof CustomerAddressSchema>;
 export type Organization = z.infer<typeof OrganizationSchema>;
+export type Attachment = z.infer<typeof AttachmentSchema>;
 export type SearchInboxesInput = z.infer<typeof SearchInboxesInputSchema>;
 export type SearchConversationsInput = z.infer<typeof SearchConversationsInputSchema>;
 export type GetThreadsInput = z.infer<typeof GetThreadsInputSchema>;
@@ -374,5 +392,6 @@ export type AssignConversationInput = z.infer<typeof AssignConversationInputSche
 export type ListUsersInput = z.infer<typeof ListUsersInputSchema>;
 export type ListMailboxesInput = z.infer<typeof ListMailboxesInputSchema>;
 export type User = z.infer<typeof UserSchema>;
+export type DownloadAttachmentInput = z.infer<typeof DownloadAttachmentInputSchema>;
 export type ServerTime = z.infer<typeof ServerTimeSchema>;
 export type ApiError = z.infer<typeof ErrorSchema>;

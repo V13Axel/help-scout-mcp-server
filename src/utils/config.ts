@@ -33,6 +33,9 @@ export interface Config {
     keepAlive: boolean;
     keepAliveMsecs: number;
   };
+  attachments: {
+    downloadDir: string | null;
+  };
 }
 
 export const config: Config = {
@@ -65,6 +68,9 @@ export const config: Config = {
     timeout: parseInt(process.env.HTTP_SOCKET_TIMEOUT || '30000', 10),
     keepAlive: process.env.HTTP_KEEP_ALIVE !== 'false', // Default to true
     keepAliveMsecs: parseInt(process.env.HTTP_KEEP_ALIVE_MSECS || '1000', 10),
+  },
+  attachments: {
+    downloadDir: process.env.ATTACHMENT_DOWNLOAD_DIR || null,
   },
 };
 
