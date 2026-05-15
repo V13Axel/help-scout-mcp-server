@@ -501,25 +501,6 @@ export class HelpScoutClient {
     
     return response.data;
   }
-    }
-
-    const response = await this.executeWithRetry<T>(() => 
-      this.client.get<T>(endpoint, { params })
-    );
-    
-    if (!cacheOptions?.skipCache) {
-      const cacheKey = `GET:${endpoint}`;
-      if (cacheOptions?.ttl || cacheOptions?.ttl === 0) {
-        cache.set(cacheKey, params, response.data, { ttl: cacheOptions.ttl });
-      } else {
-        // Default cache TTL based on endpoint
-        const defaultTtl = this.getDefaultCacheTtl(endpoint);
-        cache.set(cacheKey, params, response.data, { ttl: defaultTtl });
-      }
-    }
-    
-    return response.data;
-  }
 
   private getDefaultCacheTtl(endpoint: string): number {
     if (endpoint.includes('/conversations')) return 300; // 5 minutes
