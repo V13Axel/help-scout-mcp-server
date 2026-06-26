@@ -385,13 +385,13 @@ export class ToolHandler {
             },
             statuses: {
               type: 'array',
-              items: { enum: ['active', 'pending', 'closed', 'spam'] },
+              items: { type: 'string', enum: ['active', 'pending', 'closed', 'spam'] },
               description: 'Conversation statuses to search (defaults to active, pending, closed)',
               default: ['active', 'pending', 'closed'],
             },
             searchIn: {
               type: 'array',
-              items: { enum: ['body', 'subject', 'both'] },
+              items: { type: 'string', enum: ['body', 'subject', 'both'] },
               description: 'Where to search for terms (defaults to both body and subject)',
               default: ['both'],
             },
